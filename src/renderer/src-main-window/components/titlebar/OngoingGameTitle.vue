@@ -103,13 +103,33 @@
             </div>
           </div>
         </NPopover>
+
+        <NTooltip :z-index="TITLEBAR_TOOLTIP_Z_INDEX">
+          <template #trigger>
+            <NButton
+              class="mobile-remote-button"
+              secondary
+              circle
+              size="tiny"
+              :type="mobileStore.settings.enabled ? 'primary' : 'default'"
+              @click="showMobileRemoteModal = true"
+            >
+              <template #icon>
+                <NIcon :component="DeviceMobile" />
+              </template>
+            </NButton>
+          </template>
+          手机副屏 (局域网对局看板)
+        </NTooltip>
       </div>
     </template>
+    <MobileRemoteModal v-model:show="showMobileRemoteModal" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { useMainWindowAppContext } from '@main-window/context'
+import MobileRemoteModal from '@main-window/components/mobile-remote-modal/MobileRemoteModal.vue'
 import LcuImage from '@renderer-shared/components/LcuImage.vue'
 import SettingsRow from '@renderer-shared/components/SettingsRow.vue'
 import SettingsSection from '@renderer-shared/components/SettingsSection.vue'
@@ -118,6 +138,7 @@ import { ALL_SGPTAG_VALUE, useSgpTagOptions } from '@renderer-shared/composables
 import { useInstance } from '@renderer-shared/shards'
 import { useAppCommonStore } from '@renderer-shared/shards/app-common/store'
 import { useLeagueClientStore } from '@renderer-shared/shards/league-client/store'
+import { useMobileRemoteStore } from '@renderer-shared/shards/mobile-remote/store'
 import { OngoingGameRenderer } from '@renderer-shared/shards/ongoing-game'
 import { useOngoingGameStore } from '@renderer-shared/shards/ongoing-game/store'
 import { useSgpStore } from '@renderer-shared/shards/sgp/store'
@@ -127,9 +148,10 @@ import {
   RefreshRound as RefreshIcon,
   TuneRound as TuneIcon
 } from '@vicons/material'
+import { DeviceMobile } from '@vicons/tabler'
 import { useTranslation } from 'i18next-vue'
 import { NButton, NIcon, NPopover, NSelect, NSwitch, NTooltip } from 'naive-ui'
-import { computed, useTemplateRef } from 'vue'
+import { computed, ref, useTemplateRef } from 'vue'
 
 const { t } = useTranslation()
 
@@ -140,7 +162,10 @@ const og = useInstance(OngoingGameRenderer)
 const lcs = useLeagueClientStore()
 const appCommon = useAppCommonStore()
 const sgp = useSgpStore()
+const mobileStore = useMobileRemoteStore()
 const { openSettingsModal } = useMainWindowAppContext()
+
+const showMobileRemoteModal = ref(false)
 
 const labelsEl = useTemplateRef('labels')
 const { horizontal: horizontalOverflow } = useOverflow(labelsEl)
@@ -329,6 +354,10 @@ const titleModel = computed(() => {
   -webkit-app-region: no-drag;
 }
 
+.mobile-remote-button {
+  -webkit-app-region: no-drag;
+}
+
 .title-settings-panel {
   box-sizing: border-box;
   padding: 12px;
@@ -375,6 +404,7 @@ const titleModel = computed(() => {
   height: 100%;
   align-items: center;
   box-sizing: border-box;
+  -webkit-app-region: no-drag;
 }
 
 [data-theme='dark'] {

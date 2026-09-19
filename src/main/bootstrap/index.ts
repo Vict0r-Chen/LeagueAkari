@@ -20,6 +20,7 @@ import { KeyboardShortcutsMain } from '@main/shards/keyboard-shortcuts'
 import { LeagueClientMain } from '@main/shards/league-client'
 import { LeagueClientUxMain } from '@main/shards/league-client-ux'
 import { LoggerFactoryMain } from '@main/shards/logger-factory'
+import { MobileRemoteMain } from '@main/shards/mobile-remote'
 import { MobxUtilsMain } from '@main/shards/mobx-utils'
 import { OngoingGameMain } from '@main/shards/ongoing-game'
 import { RendererDebugMain } from '@main/shards/renderer-debug'
@@ -336,6 +337,7 @@ export function bootstrap() {
     manager.use(AutoSelectMain)
     manager.use(InGameSendMain)
     manager.use(OngoingGameMain)
+    manager.use(MobileRemoteMain)
     manager.use(RespawnTimerMain)
     manager.use(SavedPlayerMain)
     manager.use(SgpMain)
