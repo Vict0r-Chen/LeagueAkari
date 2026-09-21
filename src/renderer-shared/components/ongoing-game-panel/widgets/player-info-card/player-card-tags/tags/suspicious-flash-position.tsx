@@ -39,9 +39,9 @@ export function getSuspiciousFlashPositionTag(
   analysis: AggregatedAnalysis
 ): SuspiciousFlashPositionTag {
   return {
-    isSuspicious: Boolean(analysis.spells.flashOnD && analysis.spells.flashOnF),
-    flashOnD: analysis.spells.flashOnD,
-    flashOnF: analysis.spells.flashOnF
+    isSuspicious: Boolean(analysis?.spells?.flashOnD && analysis?.spells?.flashOnF),
+    flashOnD: analysis?.spells?.flashOnD ?? 0,
+    flashOnF: analysis?.spells?.flashOnF ?? 0
   }
 }
 

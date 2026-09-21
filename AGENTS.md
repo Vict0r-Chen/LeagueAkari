@@ -34,6 +34,10 @@ working update:
 
 Do not rely on memory for these areas; read the skill first and follow its current rules.
 
+### Build Policy
+
+- **Build on demand only**: Do not proactively run production build or packaging commands (`yarn build`, `npm run build`, `build:win`, `build:mac`, etc.) after routine code modifications or bug fixes. Rely on `yarn typecheck` / dev mode for validation. Run build commands ONLY when the user explicitly requests to build or package.
+
 ---
 
 ## PR Workflow

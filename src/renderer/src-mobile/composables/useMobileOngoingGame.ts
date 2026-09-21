@@ -91,6 +91,13 @@ export function useMobileOngoingGame() {
     selfPuuid: null
   })
 
+  if (import.meta.env.DEV) {
+    ;(window as any).__AKARI_MOBILE_RAW_STATE__ = rawState
+    ;(window as any).__AKARI_APPLY_SNAPSHOT__ = (data: any) => {
+      Object.assign(rawState, data)
+    }
+  }
+
   let ws: WebSocket | null = null
   let reconnectTimer: NodeJS.Timeout | null = null
   let isUnmounted = false
